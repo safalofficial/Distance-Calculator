@@ -1,10 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
-
 const app = express();
 app.use(cors());
 app.use(express.json());
+const { GOOGLE_API_KEY } = process.env;
 
 app.get("/distance-matrix", async (req, res) => {
   const { origins, destinations, arrival_time } = req.query;
@@ -16,7 +17,7 @@ app.get("/distance-matrix", async (req, res) => {
           origins,
           destinations,
           arrival_time,
-          key: process.env.GOOGLE_API_KEY
+          key: GOOGLE_API_KEY,
         },
       }
     );
