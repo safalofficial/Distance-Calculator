@@ -90,7 +90,7 @@ const DistanceCalculator = () => {
       const calculatePair = async (origin, destination, departureTime) => {
         try {
           const response = await axios.get(
-            "https://backend-kgrmpp7pq-safalofficials-projects.vercel.app/api/",
+            "https://backend-roan-theta.vercel.app/api/",
             {
               params: {
                 origins: origin,
