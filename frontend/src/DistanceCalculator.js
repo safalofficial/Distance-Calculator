@@ -4,6 +4,7 @@ import axios from "axios";
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
+import Image from "react-bootstrap/Image";
 
 const DistanceCalculator = () => {
   const [excelData, setExcelData] = useState([]);
@@ -38,6 +39,8 @@ const DistanceCalculator = () => {
       "Home Address": result.home,
       "Store Address": result.store,
       "Training Location Address": result.training,
+      "Arrive By": result.arriveBy, // Include Arrive By
+      "Depart By": result.departBy, // Include Depart By
       "Distance (Home to Store) (km)": result.homeToStoreDistance,
       "Travel Time (Home to Store) (minutes)": result.homeToStoreTime,
       "Distance (Store to Training) (km)": result.storeToTrainingDistance,
@@ -130,6 +133,8 @@ const DistanceCalculator = () => {
         home,
         store,
         training,
+        arriveBy, // Include Arrive By
+        departBy, // Include Depart By
         homeToStoreDistance: homeToStore.distance,
         homeToStoreTime: homeToStore.travelTime,
         storeToTrainingDistance: storeToTraining.distance,
@@ -148,7 +153,7 @@ const DistanceCalculator = () => {
 
   return (
     <div>
-      <h1>Driving Distance Calculator</h1>
+      <h1 style={{ color: "white" }}>OTR Driving Distance Calculator</h1>
       <Button onClick={downloadTemplate} style={{ margin: "5px" }}>
         Download Template
       </Button>
@@ -169,7 +174,6 @@ const DistanceCalculator = () => {
           />
         </Form.Group>
       </div>
-
       <Button
         onClick={calculateDistances}
         disabled={!excelData.length}
