@@ -30,7 +30,29 @@ const DistanceCalculator = () => {
 
     XLSX.writeFile(workbook, "DistanceCalculatorTemplate.xlsx");
   };
+  function formatDate(excelDate) {
+    const days = excelDate - 1;
 
+    // Create a new Date object, starting from January 1, 1900
+    const jsDate = new Date(1900, 0, days);
+    const hours = Math.floor((excelDate - Math.floor(excelDate)) * 24);
+    const minutes = Math.round(
+      ((excelDate - Math.floor(excelDate)) * 24 - hours) * 60
+    );
+    jsDate.setHours(hours);
+    jsDate.setMinutes(minutes);
+    // Format the date and time components
+    const year = jsDate.getFullYear();
+    const month = (jsDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = jsDate.getDate().toString().padStart(2, "0");
+    const formattedHours = jsDate.getHours().toString().padStart(2, "0");
+    const formattedMinutes = jsDate.getMinutes().toString().padStart(2, "0");
+
+    // Combine the formatted components into the desired format
+    const formattedDate = `${day}/${month}/${year} ${formattedHours}:${formattedMinutes}`;
+
+    return formattedDate;
+  }
   const exportToExcel = () => {
     const worksheetData = results.map((result) => ({
       "CXP Staff ID": result.cxpStaffId,
@@ -39,8 +61,9 @@ const DistanceCalculator = () => {
       "Home Address": result.home,
       "Store Address": result.store,
       "Training Location Address": result.training,
-      "Arrive By": result.arriveBy, // Include Arrive By
-      "Depart By": result.departBy, // Include Depart By
+
+      "Arrive By": result.arriveBy ? formatDate(result.arriveBy) : "", // Convert to string
+      "Depart By": result.departBy ? formatDate(result.departBy) : "", //
       "Distance (Home to Store) (km)": result.homeToStoreDistance,
       "Travel Time (Home to Store) (minutes)": result.homeToStoreTime,
       "Distance (Store to Training) (km)": result.storeToTrainingDistance,
